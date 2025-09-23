@@ -94,7 +94,7 @@ def get_number_of_nights():
  # main           
 
 if __name__ == "__main__":
-<<<<<<< HEAD
+
     # Initialize pricing when module is run directly
     pricing_config = initialize_pricing()
 
@@ -168,10 +168,9 @@ if __name__ == "__main__":
     print("Base Price: RM", base)
     print("Service Fee: RM", round(fee, 2))
     print("Total Price: RM", round(base + fee, 2))
-=======
+
     pricing_config = get_pricing_config()
     display_welcome()
     location = get_location_choice(pricing_config)
     room_type = get_room_type_choice(pricing_config)
     nights = get_number_of_nights()
->>>>>>> 474c500c95474880d4fdbc1cf3efc130f76d8f26
