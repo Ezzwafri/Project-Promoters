@@ -107,6 +107,63 @@ def calculate_price(location, room, nights, pricing):
     service_fee = base_price * service_rate
 
     return base_price, service_fee
+
+ # Person 4: Add-ons Selection
+
+def get_add_ons(pricing_config, nights):
+    """
+    Shows add-ons menu, accepts multiple selections with validation,
+    prevents duplicates, and computes add-ons cost (night-based where applicable).
+    """
+    addon_map = {
+        1: ("Breakfast", pricing_config['breakfast_fee_per_night'], "per_night"),
+        2: ("Airport Pickup", pricing_config['airport_pickup'], "one_time"),
+        3: ("Extra Bed", pricing_config['extra_bed'], "per_night"),
+    }
+
+    print("\nAvailable Add-ons:")
+    print(f"1. Breakfast (RM{pricing_config['breakfast_fee_per_night']} per night)")
+    print(f"2. Airport Pickup (RM{pricing_config['airport_pickup']} one-time)")
+    print(f"3. Extra Bed (RM{pricing_config['extra_bed']} per night)")
+    print("0. Done selecting add-ons")
+
+    selected = []
+    selected_names = set()
+    total_cost = 0
+
+    while True:
+        raw = input("Choose an add-on (number, 0 to finish): ").strip()
+        # Allow typos like ' 1 ', block non-numeric
+        if not raw.isdigit():
+            print("Please enter a valid number (0, 1, 2, or 3).")
+            continue
+
+        choice = int(raw)
+        if choice == 0:
+            break
+
+        if choice not in addon_map:
+            print("Invalid choice. Please select a valid option (0-3).")
+            continue
+
+        name, price, mode = addon_map[choice]
+        if name in selected_names:
+            print(f"You've already added {name}.")
+            continue
+
+        # compute cost based on mode
+        if mode == "per_night":
+            add_cost = price * nights
+        else:  # one_time
+            add_cost = price
+
+        selected.append(name)
+        selected_names.add(name)
+        total_cost += add_cost
+        print(f"✅ {name} added. (+RM{add_cost:.2f})")
+
+    return selected, total_cost
+
     
 # Main Program
 if __name__ == "__main__":
@@ -116,7 +173,9 @@ if __name__ == "__main__":
     location = get_location_choice(pricing)
     room_type = get_room_type_choice(pricing)
     nights = get_number_of_nights()
-    
+
+    addons, addons_cost = get_add_ons(pricing, nights)
+
     base, fee = calculate_price(location, room_type, nights, pricing)
 
     # Display result
@@ -124,6 +183,8 @@ if __name__ == "__main__":
     print(f"Location: {location}")
     print(f"Room Type: {room_type}")
     print(f"Nights: {nights}")
+    print(f"Add-ons: {', '.join(addons) if addons else 'None'}")
     print(f"Base Price: RM {base:.2f}")
     print(f"Service Fee: RM {fee:.2f}")
-    print(f"Total Price: RM {base + fee:.2f}")
+    print(f"Add-ons Cost: RM {addons_cost:.2f}")
+    print(f"Total Price: RM {base + fee + addons_cost:.2f}")
