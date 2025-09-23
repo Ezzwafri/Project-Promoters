@@ -1,0 +1,19 @@
+# Hotel Booking System - Fixed Pricing Configuration
+# Set by Administrator
+# This file contains all fixed prices for the booking system
+
+# Location Prices
+LOCATION_KL=113
+LOCATION_KLANG=108
+LOCATION_SHAH_ALAM=111
+
+# Room Type Prices
+ROOM_STANDARD=50
+ROOM_DELUXE=110
+ROOM_SUITE=200
+
+# Service and Add-on Prices
+SERVICE_RATE=0.1
+BREAKFAST_FEE_PER_NIGHT=20
+AIRPORT_PICKUP=30
+EXTRA_BED=20
