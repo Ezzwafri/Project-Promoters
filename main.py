@@ -59,3 +59,74 @@ def get_pricing_config():
 if __name__ == "__main__":
     # Initialize pricing when module is run directly
     pricing_config = initialize_pricing()
+
+# Person 3 - Calculation Function
+
+def calculate_price(location, room, nights, pricing):
+    """
+    Calculate base price and service fee
+    location (str) : chosen location (example: 'KL')
+    room (str)     : chosen room type (example: 'Deluxe')
+    nights (int)   : number of nights booked
+    pricing (dict) : all pricing details from Person 1
+    """
+
+    # Extract prices from pricing dictionary
+    location_price = pricing['location_prices'][location]
+    room_price = pricing['room_type_prices'][room]
+    service_rate = pricing['service_rate']
+
+    # Base price = (location price + room price) * nights
+    base_price = (location_price + room_price) * nights
+
+    # Service fee = base price * service rate
+    service_fee = base_price * service_rate
+
+    return base_price, service_fee
+
+
+if __name__ == "__main__":
+    pricing = get_pricing_config()
+
+    print("=== Welcome to Project Promoters Booking System ===")
+    
+    # Location input with validation
+    print("Available Locations:", ", ".join(pricing['location_prices'].keys()))
+    while True:
+        location = input("Enter location (KL / Klang / Shah Alam): ").title()
+        if location in pricing['location_prices']:
+            break
+        else:
+            print("Invalid location! Please try again.")
+
+    # Room type input with validation
+    print("Available Room Types:", ", ".join(pricing['room_type_prices'].keys()))
+    while True:
+        room = input("Enter room type (Standard / Deluxe / Suite): ").title()
+        if room in pricing['room_type_prices']:
+            break
+        else:
+            print("Invalid room type! Please try again.")
+
+    # Nights input with validation
+    while True:
+        try:
+            nights = int(input("Enter number of nights: "))
+            if nights > 0:
+                break
+            else:
+                print("Number of nights must be more than 0.")
+        except ValueError:
+            print("Invalid input! Please enter a number.")
+
+    # Call Person 3 function
+    base, fee = calculate_price(location, room, nights, pricing)
+
+    # Display result
+    print("\n--- Booking Summary ---")
+    print("Location:", location)
+    print("Room Type:", room)
+    print("Nights:", nights)
+    print("Base Price: RM", base)
+    print("Service Fee: RM", round(fee, 2))
+    print("Total Price: RM", round(base + fee, 2))
