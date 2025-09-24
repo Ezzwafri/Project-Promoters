@@ -39,7 +39,7 @@ def initialize_pricing():
 def get_pricing_config():
     return initialize_pricing()
 
-# person 2: user base choice
+# Person 2: user base choice
 
 def display_welcome():
     print("=" * 50)
@@ -94,7 +94,6 @@ def get_number_of_nights():
 # Person 3 - Calculation Function
 
 def calculate_price(location, room, nights, pricing):
-    
     # Extract prices from pricing dictionary
     location_price = pricing['location_prices'][location]
     room_price = pricing['room_type_prices'][room]
@@ -111,10 +110,6 @@ def calculate_price(location, room, nights, pricing):
  # Person 4: Add-ons Selection
 
 def get_add_ons(pricing_config, nights):
-    """
-    Shows add-ons menu, accepts multiple selections with validation,
-    prevents duplicates, and computes add-ons cost (night-based where applicable).
-    """
     addon_map = {
         1: ("Breakfast", pricing_config['breakfast_fee_per_night'], "per_night"),
         2: ("Airport Pickup", pricing_config['airport_pickup'], "one_time"),
@@ -167,9 +162,6 @@ def get_add_ons(pricing_config, nights):
 # Person 5: Calculate Add-ons, Subtotal, Total with Discount
 
 def calculate_total_price(nights, base_price, service_fee, addons_cost):
-    """
-    This function calculates the total price with optional discount (if nights > 3).
-    """
     # Calculate the subtotal
     subtotal = base_price + service_fee + addons_cost
     
@@ -177,7 +169,7 @@ def calculate_total_price(nights, base_price, service_fee, addons_cost):
     if nights > 3:
         discount = 0.1 * subtotal  # 10% discount
         discounted_subtotal = subtotal - discount
-        print(f"\n💡 A 10% discount is applied for staying more than 3 nights: RM {discount:.2f}")
+        print(f"\n A 10% discount is applied for staying more than 3 nights: RM {discount:.2f}")
         return discounted_subtotal, discount
     else:
         return subtotal, 0  # No discount if nights <= 3
