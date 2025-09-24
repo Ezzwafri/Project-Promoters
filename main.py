@@ -163,9 +163,26 @@ def get_add_ons(pricing_config, nights):
         print(f"✅ {name} added. (+RM{add_cost:.2f})")
 
     return selected, total_cost
-
     
-# Main Program
+# Person 5: Calculate Add-ons, Subtotal, Total with Discount
+
+def calculate_total_price(nights, base_price, service_fee, addons_cost):
+    """
+    This function calculates the total price with optional discount (if nights > 3).
+    """
+    # Calculate the subtotal
+    subtotal = base_price + service_fee + addons_cost
+    
+    # Apply a discount if the number of nights is greater than 3
+    if nights > 3:
+        discount = 0.1 * subtotal  # 10% discount
+        discounted_subtotal = subtotal - discount
+        print(f"\n💡 A 10% discount is applied for staying more than 3 nights: RM {discount:.2f}")
+        return discounted_subtotal, discount
+    else:
+        return subtotal, 0  # No discount if nights <= 3
+
+# Main Program (Integration with existing code)
 if __name__ == "__main__":
     pricing = get_pricing_config()
     display_welcome()
@@ -178,7 +195,10 @@ if __name__ == "__main__":
 
     base, fee = calculate_price(location, room_type, nights, pricing)
 
-    # Display result
+    # Call your Part 5 function to calculate the total
+    subtotal, discount = calculate_total_price(nights, base, fee, addons_cost)
+
+    # Display final result
     print("\n--- Booking Summary ---")
     print(f"Location: {location}")
     print(f"Room Type: {room_type}")
@@ -187,4 +207,7 @@ if __name__ == "__main__":
     print(f"Base Price: RM {base:.2f}")
     print(f"Service Fee: RM {fee:.2f}")
     print(f"Add-ons Cost: RM {addons_cost:.2f}")
-    print(f"Total Price: RM {base + fee + addons_cost:.2f}")
+    print(f"Subtotal: RM {subtotal:.2f}")
+    if discount > 0:
+        print(f"Discount Applied: RM {discount:.2f}")
+    print(f"Total Price: RM {subtotal:.2f}")
