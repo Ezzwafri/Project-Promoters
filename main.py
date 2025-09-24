@@ -182,6 +182,27 @@ def calculate_total_price(nights, base_price, service_fee, addons_cost):
     else:
         return subtotal, 0  # No discount if nights <= 3
 
+# Person 6: Display All Outputs (Final Receipt Style)
+
+def display_summary(location, room_type, nights, addons, base, fee, addons_cost, subtotal, discount):
+    print("\n" + "=" * 50)
+    print("              📋 BOOKING SUMMARY")
+    print("=" * 50)
+    print(f"🏙️  Location       : {location}")
+    print(f"🛏️  Room Type      : {room_type}")
+    print(f"🌙 Nights         : {nights}")
+    print(f"➕ Add-ons        : {', '.join(addons) if addons else 'None'}")
+    print("-" * 50)
+    print(f"💰 Base Price     : RM {base:.2f}")
+    print(f"💼 Service Fee    : RM {fee:.2f}")
+    print(f"🍽️ Add-ons Cost   : RM {addons_cost:.2f}")
+    if discount > 0:
+        print(f"🎉 Discount (10%) : -RM {discount:.2f}")
+    print("-" * 50)
+    print(f"💵 TOTAL PRICE    : RM {subtotal:.2f}")
+    print("=" * 50)
+    print("✅ Thank you for booking with us!")
+
 # Main Program (Integration with existing code)
 if __name__ == "__main__":
     pricing = get_pricing_config()
@@ -197,17 +218,5 @@ if __name__ == "__main__":
 
     # Call your Part 5 function to calculate the total
     subtotal, discount = calculate_total_price(nights, base, fee, addons_cost)
-
-    # Display final result
-    print("\n--- Booking Summary ---")
-    print(f"Location: {location}")
-    print(f"Room Type: {room_type}")
-    print(f"Nights: {nights}")
-    print(f"Add-ons: {', '.join(addons) if addons else 'None'}")
-    print(f"Base Price: RM {base:.2f}")
-    print(f"Service Fee: RM {fee:.2f}")
-    print(f"Add-ons Cost: RM {addons_cost:.2f}")
-    print(f"Subtotal: RM {subtotal:.2f}")
-    if discount > 0:
-        print(f"Discount Applied: RM {discount:.2f}")
-    print(f"Total Price: RM {subtotal:.2f}")
+   # Person 6: Display final output
+    display_summary(location, room_type, nights, addons, base, fee, addons_cost, subtotal, discount)
